@@ -1,0 +1,13 @@
+/* navbar */
+.navbar{
+    height:5rem;
+    background-color: white;
+}
+.fa-compass{
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link{
+    /* !important is used to override the bootstrap styling with our custom styling */
+    color: #222222 !important; 
+}
