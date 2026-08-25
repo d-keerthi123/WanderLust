@@ -6,6 +6,8 @@ const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate=require("ejs-mate");
 
+const wrapAsync=require("./utils/wrapAsync.js");
+
 
 async function main(){
     mongoose.connect('mongodb://127.0.0.1:27017/WanderLust');
@@ -44,10 +46,26 @@ app.get("/",(req,res)=>{
 // })
 
 //index route
+// app.get("/listings", async (req, res) => {
+//     const allListings = await Listing.find({});
+//     res.render("./listings/index.ejs", { allListings });
+
+// });
+
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
-    res.render("./listings/index.ejs", { allListings });
 
+    allListings.forEach((listing) => {
+        console.log(
+            listing.title,
+            "=>",
+            listing.price,
+            "=>",
+            typeof listing.price
+        );
+    });
+
+    res.render("./listings/index.ejs", { allListings });
 });
 //new route
 app.get("/listings/new",(req,res)=>{
@@ -61,13 +79,12 @@ app.get("/listings/:id",async (req,res)=>{
     res.render("./listings/show.ejs",{listing})
 })
 //create route
-app.post("/listings",async (req,res)=>{
+app.post("/listings", wrapAsync (async (req,res)=>{
     // let {title,description,image,price,location,country}=req.body;
-    const newListing=new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
-
-})
+        const newListing=new Listing(req.body.listing);
+        await newListing.save();
+        res.redirect("/listings");
+}));
 
 //edit route
 app.get("/listings/:id/edit",async (req,res)=>{
@@ -90,6 +107,10 @@ app.delete("/listings/:id",async (req,res)=>{
     res.redirect("/listings");
 })
 
+//Error handling middleware
+app.use((err,req,res,next)=>{
+    res.send("Something went wrong!!");
+})
 
 app.listen(8080,()=>{
     console.log("Server is listening to port 8080");
