@@ -15,7 +15,7 @@ main()
 async function main() {
   await mongoose.connect(MONGO_URL);
 }
-
+ 
 const initDB = async () => {
   await Listing.deleteMany({}); //to clean/clear the intial data
   await Listing.insertMany(initData.data);

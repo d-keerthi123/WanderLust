@@ -215,7 +215,7 @@ const sampleListings = [
     location: "Phuket",
     country: "Thailand",
   },
-  {
+  { 
     title: "Historic Castle in Scotland",
     description:
       "Live like royalty in this historic castle in the Scottish Highlands. Explore the rugged beauty of the area.",
