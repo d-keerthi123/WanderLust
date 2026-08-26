@@ -94,7 +94,7 @@ body{
 .show-img {
     height: 45vh;
 }
-.btns{
+.btns{ 
     display: flex; 
     position: relative;
     top: -20px;
