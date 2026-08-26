@@ -4,6 +4,7 @@ const Schema=mongoose.Schema;
 const listingSchema=new Schema({
     title:{
         type:String,
+         required:true,
     },
     description:{
         type:String,
@@ -35,6 +36,7 @@ const listingSchema=new Schema({
     },
     location:{
         type:String,
+        required:true,
     },
     country:{
         type:String,
