@@ -103,3 +103,9 @@ body{
     padding-left:0;
     padding-right: 0;
 }
+/* review */
+.review-card {
+    border: 1px solid #ccc !important;
+    border-radius: 10px;
+    margin:1rem;
+}
