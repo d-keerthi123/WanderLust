@@ -6,7 +6,7 @@
     <title>WanderLust</title>
 </head> -->
 <% layout("./layouts/boilerplate.ejs")%>
-<!-- <body> -->
+
     <br>
     <div class="row">
         <div class="col-8 offset-3">
@@ -16,13 +16,16 @@
         <img src="<%=listing.image.url%>" class="card-img-top show-img" alt="listing_img" >
         <div class="card-body">
         <p class="card-text">
-            <%= listing.description%><br>
-            &#8377;<%= Number(listing.price).toLocaleString("en-IN") %><br>
-            <%= listing.location%><br>
-            <%= listing.country%><br>
-        </p>
+            <i>Owned By : <%= listing.owner.username%></i> </p>
+            <p><%= listing.description%></p>
+            <p>&#8377;<%= Number(listing.price).toLocaleString("en-IN") %> </p>
+            <p><%= listing.location%></p>
+            <p><%= listing.country%> </p>
+       
   </div>
     </div>
+
+    <%if(currUser && currUser._id.equals(listing.owner._id)) { %>
     <div class="btns">
     <a href="/listings/<%= listing._id%>/edit" class="btn btn-dark  offset-3 edit-btn ">Edit</a>
 
@@ -30,9 +33,13 @@
         <button class="btn btn-dark  offset-5">Delete </button>
     </form>
     </div>
+    <%}%>
+    
+    
     
     <div class="col-8 offset-3 mb-3">
         <hr>
+        <%if(currUser ){%>
         <h4>Leave a review</h4>
         <form action="/listings/<%=listing._id%>/reviews" method="POST" class="needs-validation" novalidate >
             <div class="mb-3 mt-3">
@@ -48,10 +55,10 @@
             <br>
             <button class="btn btn-outline-dark">submit</button>
         </form>
-
-
-        <hr>
-
+         <hr>
+         <%}%>
+        
+       
 <h4><b>All Reviews!!</b></h4>
 
 <div class="row">
@@ -60,7 +67,7 @@
         <div class="col-6 mb-3">
             <div class="card review-card">
                 <div class="card-body">
-                    <h5 class="card-title">Keerthi D</h5>
+                    <h5 class="card-title"><%= review.author.username%></h5>
 
                     <p class="card-text">
                         <%= review.comment %>
@@ -81,5 +88,3 @@
     </div>
     </div>
  
-<!-- </body> -->
-<!-- </html> -->
