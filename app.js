@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !="production"){
+    require('dotenv').config();
+}
+
 const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
@@ -16,6 +20,7 @@ const userRouter=require("./routes/user.js");
 
 const session=require("express-session");
 const flash=require("connect-flash");
+
 
 async function main(){
     mongoose.connect('mongodb://127.0.0.1:27017/WanderLust');
@@ -71,15 +76,6 @@ app.use((req,res,next)=>{
      res.locals.currUser=req.user; 
     next();
 })
-
-// app.get("/demouser",async(req,res)=>{
-//     let fakeUser=new User({
-//         email:"abc@gmail.com",
-//         username:"abc",
-//     });
-//     let registeredUser=await User.register(fakeUser,"password");
-//     res.send(registeredUser);
-// });
 
 
 app.use("/listings",listingRouter);
