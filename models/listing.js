@@ -11,18 +11,18 @@ const listingSchema=new Schema({
         required:true,
     },
     image:{
-        
         filename: { 
             type: String,
 
         },
         url: {
             type: String,
-            default:"https://media.istockphoto.com/id/478054193/photo/beautiful-green-countryside-house.jpg?s=1024x1024&w=is&k=20&c=i4tL-w-nEE6E9QgHOU5VnWPbr5m_cQj9w_VVJ8OB_Os=",
-            set:(v)=> v === ""
-            ? "https://media.istockphoto.com/id/478054193/photo/beautiful-green-countryside-house.jpg?s=1024x1024&w=is&k=20&c=i4tL-w-nEE6E9QgHOU5VnWPbr5m_cQj9w_VVJ8OB_Os="
+            default:"",
+            set:(v)=> v === "https://unsplash.com/photos/a-beautiful-pool-and-resort-in-tropical-setting-YKvvujLOUzU"
+            ? "https://unsplash.com/photos/a-beautiful-pool-and-resort-in-tropical-setting-YKvvujLOUzU"
             :v,
         },
+        
     },
     price:{
         type:Number,
