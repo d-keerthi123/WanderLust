@@ -19,17 +19,27 @@ const reviewRouter=require("./routes/review.js");
 const userRouter=require("./routes/user.js");
 
 const session=require("express-session");
+const MongoStore = require('connect-mongo').default;
 const flash=require("connect-flash");
 
+const dbUrl = process.env.ATLASDB_URL;
 
-async function main(){
-    mongoose.connect('mongodb://127.0.0.1:27017/WanderLust');
+
+// async function main(){
+//     mongoose.connect('mongodb://127.0.0.1:27017/WanderLust');
+// }
+
+async function main() {
+  await mongoose.connect(dbUrl);
 }
-main().then(()=>{
-    console.log("Connected To Database");
-}).catch((err)=>{
+main()
+  .then(() => {
+    console.log("Connected to DB");
+  })
+  .catch((err) => {
     console.log(err);
-})
+  });
+
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -39,9 +49,23 @@ app.engine("ejs",ejsMate);
 
 app.use(express.static(path.join(__dirname,"/public")));
 
+const store=MongoStore.create({
+    mongoUrl:dbUrl,
+    crypto:{
+        secret:process.env.SECRET,
+    },
+    touchAfter:24*3600,//interval b/w session updates
+});
+
+
+store.on("error",(err)=>{
+    console.log("Error in mongo session store",err);
+});
+
 
 const sessionOptions={
-    secret:"mysecretcode",
+    store,
+    secret:process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     //track session
@@ -53,10 +77,11 @@ const sessionOptions={
 };
 
 
-//root
-app.get("/",(req,res)=>{
-    res.send("This is root");
-})
+// //root
+// app.get("/",(req,res)=>{
+//     res.send("This is root");
+// })
+
 
 
 app.use(session(sessionOptions));
