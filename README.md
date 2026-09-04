@@ -32,7 +32,6 @@ https://wanderlust-oo01.onrender.com/listings
 ## Installation
 
 Clone the repository:
-
 ```bash
 git clone https://github.com/d-keerthi123/WanderLust.git
 
